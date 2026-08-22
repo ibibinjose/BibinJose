@@ -1,0 +1,367 @@
+/* --- Impulse-Inspired Design System --- */
+
+:root {
+  /* Colors — Warm Cream Light Theme */
+  --bg-primary: #FAF8F5;       /* Warm parchment */
+  --bg-secondary: #ffffff;
+  --bg-tertiary: #F0EDE8;      /* Warm sand panel */
+  --border-color: rgba(15, 14, 13, 0.10);
+  
+  --text-primary: #0F0E0D;     /* Near-black warm */
+  --text-secondary: rgba(15, 14, 13, 0.65);
+  --text-tertiary: rgba(15, 14, 13, 0.40);
+  
+  --accent-color: #090C9B;      /* Royal Blue */
+  --accent-secondary: #FF331F;  /* Vivid Red */
+  --accent-ink: #ffffff;        /* White ink on blue */
+  --accent-glow: rgba(9, 12, 155, 0.06);
+  --accent-border: rgba(9, 12, 155, 0.20);
+  
+  --glass-bg: rgba(250, 248, 245, 0.88);
+  --glass-border: rgba(15, 14, 13, 0.08);
+  --glass-blur: blur(14px);
+  
+  --card-shadow: 0 4px 24px -4px rgba(15, 14, 13, 0.06), 0 2px 8px -2px rgba(15, 14, 13, 0.03);
+  
+  /* Fonts — Impulse Stack */
+  --font-sans: 'Space Grotesk', ui-sans-serif, sans-serif;
+  --font-display: 'Archivo', ui-sans-serif, sans-serif;
+  --font-mono: 'Space Mono', ui-monospace, monospace;
+
+  /* Custom Scrollbar Tokens */
+  --scrollbar-thumb: #d8d4cd;
+  --scrollbar-track: #FAF8F5;
+
+  /* Mesh Grid Variables */
+  --bg-grid-line: rgba(15, 14, 13, 0.018);
+  --bg-glow-1: rgba(9, 12, 155, 0.025);
+  --bg-glow-2: rgba(255, 51, 31, 0.015);
+
+  /* Buttons */
+  --btn-primary-bg: #090C9B;
+  --btn-primary-fg: #ffffff;
+  --btn-primary-hover-bg: #FF331F;
+}
+
+/* Dark Theme — Impulse Warm Black */
+[data-theme="dark"] {
+  --bg-primary: #0F0E0D;       /* Impulse warm black */
+  --bg-secondary: #1A1817;     /* Warm surface */
+  --bg-tertiary: #232120;      /* Elevated surface */
+  --border-color: rgba(244, 241, 234, 0.12);
+  
+  --text-primary: #F4F1EA;     /* Warm white */
+  --text-secondary: rgba(244, 241, 234, 0.60);
+  --text-tertiary: rgba(244, 241, 234, 0.38);
+  
+  --accent-color: #4D5BFF;      /* Bright Blue (dark mode) */
+  --accent-secondary: #FF331F;  /* Vivid Red */
+  --accent-ink: #ffffff;
+  --accent-glow: rgba(77, 91, 255, 0.15);
+  --accent-border: rgba(77, 91, 255, 0.25);
+  
+  --glass-bg: rgba(15, 14, 13, 0.88);
+  --glass-border: rgba(244, 241, 234, 0.10);
+  
+  --card-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.7), 0 2px 6px 0 rgba(77, 91, 255, 0.05);
+  
+  --scrollbar-thumb: #2a2826;
+  --scrollbar-track: #0F0E0D;
+
+  /* Mesh Grid Variables */
+  --bg-grid-line: rgba(244, 241, 234, 0.012);
+  --bg-glow-1: rgba(77, 91, 255, 0.07);
+  --bg-glow-2: rgba(255, 51, 31, 0.04);
+
+  /* Buttons */
+  --btn-primary-bg: #4D5BFF;
+  --btn-primary-fg: #ffffff;
+  --btn-primary-hover-bg: #FF331F;
+}
+
+/* Selection */
+::selection {
+  background: #090C9B;
+  color: #ffffff;
+}
+
+/* Reset and Global Styles */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+html, body {
+  background-color: var(--bg-primary);
+  background-image: 
+    radial-gradient(at 0% 0%, var(--bg-glow-1) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, var(--bg-glow-2) 0px, transparent 50%),
+    linear-gradient(var(--bg-grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--bg-grid-line) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 48px 48px, 48px 48px;
+  color: var(--text-secondary);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+  min-height: 100vh;
+}
+
+/* Heading Balance and Legibility — Archivo display */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  color: var(--text-primary);
+  font-weight: 900;
+  text-wrap: balance;
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+}
+
+h1 {
+  letter-spacing: -0.055em;
+  line-height: 0.82;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.15s ease, transform 0.2s ease;
+}
+
+button {
+  font-family: var(--font-sans);
+  cursor: pointer;
+  border: none;
+  outline: none;
+  background: none;
+}
+
+/* Focus ring */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--accent-color);
+  outline-offset: 2px;
+}
+
+/* Custom Scrollbars */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+}
+
+/* WebKit Fallback */
+@supports not (scrollbar-color: auto) {
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--scrollbar-track);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb);
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--accent-color);
+  }
+}
+
+/* Global Layout container */
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-content {
+  flex: 1;
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 110px clamp(20px, 4vw, 40px) 48px;
+}
+
+/* Glassmorphism Classes */
+.glass-panel {
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--card-shadow);
+}
+
+.card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 22px;
+  padding: 28px;
+  box-shadow: var(--card-shadow);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  border-color: var(--accent-border);
+  box-shadow: 0 16px 40px -16px rgba(9, 12, 155, 0.22);
+}
+
+/* Page Entrance Animation */
+@keyframes pageFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.page-layout {
+  animation: pageFadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Badges — Impulse style: Space Mono uppercase, coral dot */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: 100px;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-family: var(--font-mono);
+  border: 1px solid var(--border-color);
+}
+
+.badge.live {
+  background-color: transparent;
+  color: var(--text-primary);
+}
+
+.badge.building {
+  background-color: transparent;
+  color: var(--text-primary);
+}
+
+.badge.exploring {
+  background-color: transparent;
+  color: var(--text-primary);
+}
+
+.badge.archived {
+  background-color: transparent;
+  color: var(--text-tertiary);
+}
+
+/* Pulsing DOT for Live badges — coral glow */
+.pulse-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--accent-color);
+  box-shadow: 0 0 12px rgba(9, 12, 155, 0.7);
+  animation: pulse-animation 1.8s infinite;
+}
+
+@keyframes pulse-animation {
+  0% {
+    opacity: 0.5;
+    box-shadow: 0 0 0 0 rgba(9, 12, 155, 0.4);
+  }
+  50% {
+    opacity: 1;
+    box-shadow: 0 0 0 6px rgba(9, 12, 155, 0);
+  }
+  100% {
+    opacity: 0.5;
+    box-shadow: 0 0 0 0 rgba(9, 12, 155, 0);
+  }
+}
+
+/* Animations & Progressive Scroll Reveals */
+@media (prefers-reduced-motion: no-preference) {
+  @supports ((animation-timeline: view()) and (animation-range: entry)) {
+    @keyframes fade-in-up {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+    }
+    
+    .scroll-reveal {
+      animation: fade-in-up auto linear backwards;
+      animation-timeline: view();
+      animation-range: entry 10% cover 30%;
+    }
+  }
+}
+
+/* JS Fallback for Scroll Reveal */
+.reveal-visible {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-hidden {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+/* Utilities */
+.gradient-text {
+  background: linear-gradient(135deg, var(--accent-color), var(--accent-secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-center { text-align: center; }
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .main-content {
+    padding-top: 72px;
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+  
+  h1 { font-size: clamp(2rem, 10vw, 2.5rem) !important; }
+  h2 { font-size: 1.75rem !important; }
+  h3 { font-size: 1.35rem !important; }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Custom ambient mouse glow following coordinates — coral aura */
+.cursor-glow-bg {
+  position: fixed;
+  top: -200px;
+  left: -200px;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+  will-change: transform;
+  transition: transform 0.15s cubic-bezier(0.25, 1, 0.5, 1);
+}
+

@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- SEO Meta Tags -->
+    <title>Bibin Jose | Builder, Founder & Cultural Entrepreneur</title>
+    <meta name="description" content="I build platforms, communities, and ventures for the future of culture. Connecting people, culture, and technology." />
+    <meta name="author" content="Bibin Jose" />
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <meta name="color-scheme" content="light dark">
+    <script>
+      {
+        const colorScheme = localStorage.getItem("color-scheme");
+        if (colorScheme) {
+          document.querySelector('meta[name="color-scheme"]').content = colorScheme;
+          document.documentElement.setAttribute('data-theme', colorScheme);
+        } else {
+          // Default to dark mode if no preference saved
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
