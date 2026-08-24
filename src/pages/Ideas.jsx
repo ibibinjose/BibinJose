@@ -127,14 +127,15 @@ export default function Ideas() {
 
   // Handle keyboard events (Esc key to close modal)
   useEffect(() => {
+    if (!selectedIdea) return undefined
+
     const handleKeyDown = (e) => {
-      if (e.key === 'Escape') {
-        setSelectedIdea(null)
-      }
+      if (e.key === 'Escape') setSelectedIdea(null)
     }
+
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [])
+  }, [selectedIdea])
 
   // Filter ideas
   const filteredIdeas = ideasList.filter(idea => {
@@ -199,10 +200,12 @@ export default function Ideas() {
       <section className="ideas-grid">
         {filteredIdeas.length > 0 ? (
           filteredIdeas.map((idea) => (
-            <div 
-              key={idea.id} 
+            <button
+              type="button"
+              key={idea.id}
               className="card idea-card scroll-reveal"
               onClick={() => setSelectedIdea(idea)}
+              aria-label={`Read ${idea.title}`}
             >
               <div className="idea-card-header">
                 <span className={`idea-type-tag ${idea.type.toLowerCase()}`}>
@@ -216,7 +219,7 @@ export default function Ideas() {
                 <span className="read-time"><Clock size={12} /> {idea.readTime}</span>
                 <span className="read-link">Read Concept &rarr;</span>
               </div>
-            </div>
+            </button>
           ))
         ) : (
           <div className="no-results glass-panel scroll-reveal">
@@ -233,12 +236,13 @@ export default function Ideas() {
         <div 
           className="modal-overlay" 
           onClick={() => setSelectedIdea(null)}
-          role="dialog"
-          aria-modal="true"
         >
-          <div 
-            className="modal-content glass-panel scroll-reveal" 
+          <div
+            className="modal-content glass-panel scroll-reveal"
             onClick={(e) => e.stopPropagation()}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="idea-modal-title"
           >
             <div className="modal-header">
               <span className={`idea-type-tag ${selectedIdea.type.toLowerCase()}`}>
@@ -253,7 +257,7 @@ export default function Ideas() {
               </button>
             </div>
             
-            <h2 className="modal-title">{selectedIdea.title}</h2>
+            <h2 className="modal-title" id="idea-modal-title">{selectedIdea.title}</h2>
             <h3 className="modal-subtitle">{selectedIdea.subtitle}</h3>
             
             <div className="modal-meta">

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import Home from './pages/Home'
@@ -13,68 +13,63 @@ import './App.css'
 
 export default function App() {
   const [currentHash, setCurrentHash] = useState(window.location.hash || '#/')
-  const [mousePos, setMousePos] = useState({ x: -1000, y: -1000 }) // Start offscreen
+  const cursorGlowRef = useRef(null)
 
   useEffect(() => {
-    const handleMouseMove = (e) => {
-      setMousePos({ x: e.clientX, y: e.clientY })
+    const handleMouseMove = (event) => {
+      const glow = cursorGlowRef.current
+      if (!glow) return
+
+      glow.style.setProperty('--cursor-x', `${event.clientX}px`)
+      glow.style.setProperty('--cursor-y', `${event.clientY}px`)
     }
-    window.addEventListener('mousemove', handleMouseMove)
+
+    window.addEventListener('mousemove', handleMouseMove, { passive: true })
     return () => window.removeEventListener('mousemove', handleMouseMove)
   }, [])
 
   useEffect(() => {
     const handleHashChange = () => {
       setCurrentHash(window.location.hash || '#/')
-      // Scroll to top on navigation
-      window.scrollTo({ top: 0, behavior: 'instant' })
-    };
-
-    window.addEventListener('hashchange', handleHashChange)
-    
-    // Register scroll animations fallback for browsers that don't support animation-timeline
-    if (!CSS.supports('(animation-timeline: view()) and (animation-range: entry)')) {
-      const registerObserver = () => {
-        const elements = document.querySelectorAll('.scroll-reveal');
-        if (elements.length === 0) return;
-
-        const observer = new IntersectionObserver(
-          (entries) => {
-            entries.forEach((entry) => {
-              if (entry.isIntersecting) {
-                entry.target.classList.add('reveal-visible');
-                entry.target.classList.remove('reveal-hidden');
-              } else {
-                // optional: hide again when scrolled away
-                // entry.target.classList.remove('reveal-visible');
-                // entry.target.classList.add('reveal-hidden');
-              }
-            });
-          },
-          {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px' // Trigger slightly before entering fully
-          }
-        );
-
-        elements.forEach((el) => {
-          el.classList.add('reveal-hidden');
-          observer.observe(el);
-        });
-      };
-      
-      // Delay slightly to allow DOM to render
-      const timer = setTimeout(registerObserver, 100);
-      return () => {
-        clearTimeout(timer);
-        window.removeEventListener('hashchange', handleHashChange);
-      };
+      window.scrollTo({ top: 0, behavior: 'auto' })
     }
 
-    return () => window.removeEventListener('hashchange', handleHashChange);
-  }, [currentHash]); // Run on hash change to re-observe elements on new pages
+    window.addEventListener('hashchange', handleHashChange)
 
-  // Route resolver
+    if (CSS.supports('(animation-timeline: view()) and (animation-range: entry)')) {
+      return () => window.removeEventListener('hashchange', handleHashChange)
+    }
+
+    let observer
+    const timer = window.setTimeout(() => {
+      const elements = document.querySelectorAll('.scroll-reveal')
+      if (elements.length === 0) return
+
+      observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('reveal-visible')
+              entry.target.classList.remove('reveal-hidden')
+            }
+          })
+        },
+        { threshold: 0.1, rootMargin: '0px 0px -50px 0px' },
+      )
+
+      elements.forEach((element) => {
+        element.classList.add('reveal-hidden')
+        observer.observe(element)
+      })
+    }, 100)
+
+    return () => {
+      window.clearTimeout(timer)
+      observer?.disconnect()
+      window.removeEventListener('hashchange', handleHashChange)
+    }
+  }, [currentHash])
+
   const renderPage = () => {
     switch (currentHash) {
       case '#/':
@@ -101,17 +96,10 @@ export default function App() {
   const isMeetPage = currentHash === '#/meet'
 
   return (
-    <div className="app-container">
-      <div 
-        className="cursor-glow-bg" 
-        style={{ 
-          transform: `translate3d(${mousePos.x}px, ${mousePos.y}px, 0)` 
-        }} 
-      />
+    <div className={`app-container ${isMeetPage ? 'meet-route' : ''}`}>
+      <div ref={cursorGlowRef} className="cursor-glow-bg" aria-hidden="true" />
       {!isMeetPage && <Header currentHash={currentHash} />}
-      <main className="main-content">
-        {renderPage()}
-      </main>
+      <main className="main-content">{renderPage()}</main>
       {!isMeetPage && <Footer />}
     </div>
   )
