@@ -1,5 +1,6 @@
-import { Calendar, Compass, Users, Sparkles, MapPin, Clock, Coffee } from 'lucide-react'
+import { Calendar, Compass, Users, Sparkles, MapPin, Clock } from 'lucide-react'
 import { useState, useEffect } from 'react'
+import BuyMeACoffeeButton from '../components/BuyMeACoffeeButton'
 
 export default function Now() {
   const [localTime, setLocalTime] = useState('')
@@ -107,10 +108,7 @@ export default function Now() {
         <p>If you're building in the community space, looking for a venture studio to launch a project, or just want to chat about diaspora technology, let's <a href="https://buymeacoffee.com/bibinjose" target="_blank" rel="noopener noreferrer" className="text-accent">grab coffee</a> or jump on a call.</p>
         <div className="invite-ctas">
           <a href="#/contact" className="btn btn-primary">Reach Out</a>
-          <a href="https://buymeacoffee.com/bibinjose" className="btn btn-secondary" target="_blank" rel="noopener noreferrer">
-            <Coffee size={16} />
-            <span>Buy Me a Coffee</span>
-          </a>
+          <BuyMeACoffeeButton />
         </div>
       </section>
     </div>

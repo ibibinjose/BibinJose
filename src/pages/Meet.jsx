@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import portrait from '../assets/portrait.jpg'
-import { ArrowRight, BookOpen, Briefcase, Clock, Coffee, Handshake, Home, Mail, UserPlus } from 'lucide-react'
+import { ArrowRight, BookOpen, Briefcase, Clock, Handshake, Home, Mail, UserPlus } from 'lucide-react'
+import BuyMeACoffeeButton from '../components/BuyMeACoffeeButton'
 
 const LinkedInIcon = ({ size = 20 }) => (
   <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" /><rect x="2" y="9" width="4" height="12" /><circle cx="4" cy="4" r="2" /></svg>
@@ -78,7 +79,6 @@ END:VCARD`
     { icon: <LinkedInIcon />, href: 'https://www.linkedin.com/in/ibibinjose/', label: 'LinkedIn' },
     { icon: <XIcon />, href: 'https://x.com/bibinjose', label: 'X' },
     { icon: <GithubIcon />, href: 'https://github.com/ibibinjose', label: 'GitHub' },
-    { icon: <Coffee size={20} />, href: 'https://buymeacoffee.com/bibinjose', label: 'Buy Me a Coffee' },
     { icon: <Mail size={20} />, href: 'mailto:hello@bibinjose.com', label: 'Email' },
   ]
 
@@ -102,6 +102,10 @@ END:VCARD`
         </div>
 
         <button type="button" onClick={handleSaveContact} className="meet-save-btn glass-panel"><UserPlus size={20} className="text-accent" /><span>Save contact to phone</span></button>
+
+        <div className="meet-bmc-container" style={{ display: 'flex', justifyContent: 'center', margin: '8px 0 24px' }}>
+          <BuyMeACoffeeButton />
+        </div>
 
         <div className="meet-links-section">
           <h2 className="meet-section-title">Navigation hub</h2>
