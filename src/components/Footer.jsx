@@ -1,4 +1,4 @@
-import { Mail, Globe } from 'lucide-react'
+import { Mail, Globe, Coffee } from 'lucide-react'
 
 // Custom SVGs for brand icons not present in newer Lucide versions
 const LinkedinIcon = ({ size = 18 }) => (
@@ -16,6 +16,7 @@ export default function Footer() {
     { icon: <Mail size={18} />, href: 'mailto:hello@bibinjose.com', label: 'Email' },
     { icon: <LinkedinIcon size={18} />, href: 'https://www.linkedin.com/in/ibibinjose/', label: 'LinkedIn' },
     { icon: <GithubIcon size={18} />, href: 'https://github.com/ibibinjose', label: 'GitHub' },
+    { icon: <Coffee size={18} />, href: 'https://buymeacoffee.com/bibinjose', label: 'Buy Me a Coffee' },
     { icon: <Globe size={18} />, href: '#/', label: 'Website' },
   ]
 
@@ -44,6 +45,7 @@ export default function Footer() {
             <a href="#/now" className="footer-link">Now</a>
             <a href="#/work-with-me" className="footer-link">Work With Me</a>
             <a href="#/contact" className="footer-link">Contact</a>
+            <a href="https://buymeacoffee.com/bibinjose" className="footer-link" target="_blank" rel="noopener noreferrer">Buy Me a Coffee</a>
           </div>
         </div>
       </div>
